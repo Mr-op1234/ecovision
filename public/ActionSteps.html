@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sustainable Future: Preserving Our Environment</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dark-green: #1a4d2e;
+            --medium-green: #2d6a4f;
+            --light-green: #40916c;
+            --very-light-green: #b7e4c7;
+            --accent: #f8f9d7;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Lora', serif;
+        }
+        
+        .navbar {
+            background-color: var(--dark-green);
+            transition: all 0.3s ease-in-out;
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(26, 77, 46, 0.9), rgba(26, 77, 46, 0.7)), url('https://images.unsplash.com/photo-1501854140801-50d01698950b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        
+        .section-title {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 70%;
+            height: 3px;
+            background-color: var(--light-green);
+            bottom: -10px;
+            left: 0;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+        
+        .section:hover .section-title::after {
+            transform: scaleX(1);
+        }
+        
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-image {
+            overflow: hidden;
+        }
+        
+        .card img {
+            transition: transform 0.5s ease;
+        }
+        
+        .card:hover img {
+            transform: scale(1.05);
+        }
+        
+        .action-btn {
+            background-color: var(--medium-green);
+            transition: all 0.3s ease;
+        }
+        
+        .action-btn:hover {
+            background-color: var(--dark-green);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(45, 106, 79, 0.4);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--dark-green);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        
+        .stat.in-view .stat-number {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .fact-card {
+            background-color: var(--very-light-green);
+            border-left: 5px solid var(--medium-green);
+            transform: translateX(-20px);
+            opacity: 0;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+        
+        .fact-card.in-view {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        
+        .footer {
+            background-color: var(--dark-green);
+        }
+        
+        /* Animations for scrolling elements */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+        
+        .fade-in.appear {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .slide-in-left.appear, .slide-in-right.appear {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .zoom-in {
+            transform: scale(0.8);
+            opacity: 0;
+            transition: transform 0.8s ease, opacity 0.8s ease;
+        }
+        
+        .zoom-in.appear {
+            transform: scale(1);
+            opacity: 1;
+        }
+        
+        /* Step cards */
+        .step-card {
+            border-left: 4px solid var(--medium-green);
+            transition: all 0.3s ease;
+        }
+        
+        .step-card:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .step-number {
+            background-color: var(--medium-green);
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+        }
+        
+        /* Tooltips */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            border-bottom: 1px dotted var(--medium-green);
+        }
+        
+        .tooltip .tooltip-text {
+            visibility: hidden;
+            width: 200px;
+            background-color: var(--dark-green);
+            color: white;
+            text-align: center;
+            border-radius: 6px;
+            padding: 10px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        /* Progress bars */
+        .progress-container {
+            background-color: #e9ecef;
+            border-radius: 10px;
+            position: relative;
+            margin: 15px 0;
+            height: 25px;
+            width: 100%;
+        }
+        
+        .progress-bar {
+            border-radius: 10px;
+            height: 100%;
+            background: linear-gradient(to right, var(--light-green), var(--medium-green));
+            width: 0;
+            transition: width 1.5s ease-in-out;
+        }
+        
+        .progress-container .label {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            color: white;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    
+
+    <!-- Hero Section -->
+    <header class="hero h-screen flex items-center justify-center text-white px-4">
+        <div class="text-center max-w-4xl">
+            <h1 class="text-5xl md:text-6xl font-bold mb-6 fade-in appear">Sustaining Our Planet for Future Generations</h1>
+            <p class="text-xl md:text-2xl mb-8 fade-in appear">Discover actionable steps to preserve nature, reduce pollution, and live sustainably.</p>
+            <div class="flex flex-wrap justify-center gap-4 fade-in appear">
+                <a href="#understanding" class="action-btn px-6 py-3 rounded-full text-white font-semibold">Learn More</a>
+                <a href="#action" class="bg-transparent border-2 border-white px-6 py-3 rounded-full text-white font-semibold hover:bg-white hover:text-green-800 transition duration-300">Take Action Now</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Stats Section -->
+    <section class="bg-gray-100 py-16 px-4">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                <div class="stat bg-white p-6 rounded-lg shadow-md">
+                    <div class="stat-number">70%</div>
+                    <p class="text-gray-600 mt-2">of Earth's wildlife has vanished since 1970</p>
+                </div>
+                <div class="stat bg-white p-6 rounded-lg shadow-md">
+                    <div class="stat-number">11+</div>
+                    <p class="text-gray-600 mt-2">Million hectares of forests lost each year</p>
+                </div>
+                <div class="stat bg-white p-6 rounded-lg shadow-md">
+                    <div class="stat-number">36B</div>
+                    <p class="text-gray-600 mt-2">Tons of CO2 emitted globally each year</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Understanding Environmental Sustainability -->
+    <section id="understanding" class="section py-16 px-4 bg-white">
+        <div class="container mx-auto">
+            <h2 class="section-title text-3xl md:text-4xl font-bold text-center mb-16 text-gray-800">Understanding Environmental Sustainability</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+                <div class="slide-in-left">
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-4">What is Environmental Sustainability?</h3>
+                    <p class="text-gray-600 mb-4">Environmental sustainability is the responsible interaction with the environment to avoid depletion or degradation of natural resources and allow for long-term environmental quality. It's about meeting the needs of the present without compromising the ability of future generations to meet their own needs.</p>
+                    <p class="text-gray-600 mb-6">The three pillars of sustainability include:</p>
+                    <ul class="space-y-2 text-gray-600 mb-6">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-600 mt-1 mr-2"></i>
+                            <span><strong>Environmental Protection:</strong> Conserving natural resources and protecting ecosystems</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-600 mt-1 mr-2"></i>
+                            <span><strong>Social Equity:</strong> Ensuring fair access to resources and opportunities</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-600 mt-1 mr-2"></i>
+                            <span><strong>Economic Development:</strong> Creating sustainable economic growth without environmental harm</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card overflow-hidden rounded-lg shadow-lg slide-in-right">
+                    <div class="card-image">
+                        <img src="https://i.imgur.com/hma1XrB.jpeg" alt="Sustainable Environment" class="w-full h-auto">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-16">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-6">Why It Matters</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="fact-card p-5 rounded-lg">
+                        <h4 class="font-bold text-xl mb-2 text-gray-800">Biodiversity Protection</h4>
+                        <p class="text-gray-600">Preserving the incredible variety of life on Earth maintains ecosystem stability and provides resources for medicine, agriculture, and industry.</p>
+                    </div>
+                    <div class="fact-card p-5 rounded-lg" style="transition-delay: 0.2s;">
+                        <h4 class="font-bold text-xl mb-2 text-gray-800">Climate Regulation</h4>
+                        <p class="text-gray-600">Healthy ecosystems act as carbon sinks, regulating greenhouse gases and moderating local weather patterns and global climate.</p>
+                    </div>
+                    <div class="fact-card p-5 rounded-lg" style="transition-delay: 0.4s;">
+                        <h4 class="font-bold text-xl mb-2 text-gray-800">Human Well-being</h4>
+                        <p class="text-gray-600">Clean air, fresh water, and healthy food depend on functioning ecosystems. Nature also provides mental health benefits and cultural value.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Preserving Natural Ecosystems -->
+    <section id="preservation" class="section py-16 px-4 bg-gray-100">
+        <div class="container mx-auto">
+            <h2 class="section-title text-3xl md:text-4xl font-bold text-center mb-16 text-gray-800">Preserving Natural Ecosystems</h2>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+                <div class="zoom-in">
+                    <img src="https://www.asiapathways-adbi.org/wp-content/uploads/2024/09/Natural-Capital-Valuing-Nature-to-Protect-and-Restore-Ecosystem-Services-for-Sustainable-Development-.png" alt="Natural Ecosystem" class="w-full h-auto rounded-lg shadow-lg">
+                </div>
+                <div class="space-y-6 fade-in">
+                    <div class="step-card p-5 bg-white rounded-lg shadow">
+                        <div class="flex items-center mb-3">
+                            <div class="step-number mr-3">1</div>
+                            <h3 class="text-xl font-semibold text-gray-800">Support Protected Areas</h3>
+                        </div>
+                        <p class="text-gray-600">Protected areas like national parks and wildlife reserves are crucial for biodiversity conservation. Support these areas by visiting them, donating to their upkeep, or volunteering for conservation projects.</p>
+                    </div>
+                    
+                    <div class="step-card p-5 bg-white rounded-lg shadow">
+                        <div class="flex items-center mb-3">
+                            <div class="step-number mr-3">2</div>
+                            <h3 class="text-xl font-semibold text-gray-800">Restore Degraded Habitats</h3>
+                        </div>
+                        <p class="text-gray-600">Participate in habitat restoration projects in your community. This can include planting native species, removing invasive species, or helping to clean up polluted areas.</p>
+                    </div>
+                    
+                    <div class="step-card p-5 bg-white rounded-lg shadow">
+                        <div class="flex items-center mb-3">
+                            <div class="step-number mr-3">3</div>
+                            <h3 class="text-xl font-semibold text-gray-800">Create Wildlife-Friendly Spaces</h3>
+                        </div>
+                        <p class="text-gray-600">Transform your backyard or community spaces into havens for local wildlife by planting native species, providing water sources, and minimizing chemical use.</p>
+                    </div>
+                    
+                    <div class="step-card p-5 bg-white rounded-lg shadow">
+                        <div class="flex items-center mb-3">
+                            <div class="step-number mr-3">4</div>
+                            <h3 class="text-xl font-semibold text-gray-800">Support Sustainable Agriculture</h3>
+                        </div>
+                        <p class="text-gray-600">Choose food produced using sustainable farming practices that protect soil health, conserve water, and reduce chemical inputs, helping to preserve surrounding ecosystems.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white p-6 rounded-lg shadow-md fade-in">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-4">Success Story: Ecosystem Restoration</h3>
+                <div class="flex flex-col md:flex-row items-center gap-6">
+                    <div class="md:w-1/3">
+                        <img src="https://www.thegef.org/sites/default/files/pictures/sgp_costa_rica_bajo-la-paz-2186x1230.jpg" alt="Ecosystem Restoration" class="w-full h-auto rounded-lg shadow">
+                    </div>
+                    <div class="md:w-2/3">
+                        <p class="text-gray-600 mb-4">In Costa Rica, forest cover increased from 21% to over 50% between 1987 and 2021, reversing decades of deforestation. This remarkable recovery was achieved through a combination of government policies, payment for environmental services, ecotourism development, and community involvement.</p>
+                        <p class="text-gray-600">The results include the return of numerous wildlife species, improved water quality, carbon sequestration, and economic benefits from ecotourism. This serves as a powerful example of how dedicated conservation efforts can restore ecosystems while supporting local communities.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reducing Pollution -->
+    <section id="pollution" class="section py-16 px-4 bg-white">
+        <div class="container mx-auto">
+            <h2 class="section-title text-3xl md:text-4xl font-bold text-center mb-16 text-gray-800">Reducing Pollution</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+                <div class="card bg-white rounded-lg shadow-lg overflow-hidden fade-in">
+                    <div class="card-image h-48">
+                        <img src="https://gumlet.assettype.com/downtoearth%2F2024-09-07%2Fa03n20qq%2Fair.jpg?w=480&auto=format%2Ccompress" alt="Air Pollution" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">Air Pollution</h3>
+                        <div class="space-y-3 text-gray-600">
+                            <p class="mb-4">Air pollution causes approximately 7 million premature deaths annually and damages ecosystems worldwide.</p>
+                            <div class="flex items-start">
+                                <i class="fas fa-arrow-right text-green-600 mt-1 mr-2"></i>
+                                <p>Use public transportation, carpool, bike, or walk to reduce vehicle emissions</p>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-arrow-right text-green-600 mt-1 mr-2"></i>
+                                <p>Support renewable energy by switching to clean energy providers</p>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-arrow-right text-green-600 mt-1 mr-2"></i>
+                                <p>Reduce energy consumption at home through better insulation and efficient appliances</p>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-arrow-right text-green-600 mt-1 mr-2"></i>
+                                <p>Avoid burning trash or leaves, which releases harmful pollutants</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card bg-white rounded-lg shadow-lg overflow-hidden fade-in" style="transition-delay: 0.2s;">
+                    <div class="card-image h-48">
+                        <img src="https://images.unsplash.com/photo-1621451537084-482c73073a0f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Water Pollution" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">Water Pollution</h3>
+                        <div class="space-y-3 text-gray-600">
+                            <p class="mb-4">Over 80% of the world's wastewater flows back into the environment without being treated or reused.</p>
+                            <div class="flex items-start">
+                                <i class="fas fa-arrow-right text-green-600 mt-1 mr-2"></i>
+                                <p>Properly dispose of hazardous waste like chemicals, medications, and batteries</p>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-arrow-right text-green-600 mt-1 mr-2"></i>
+                                <p>Use environmentally friendly cleaning products to reduce chemical runoff</p>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-arrow-right text-green-600 mt-1 mr-2"></i>
+                                <p>Participate in local waterway cleanups to remove trash from streams and beaches</p>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-arrow-right text-green-600 mt-1 mr-2"></i>
+                                <p>Conserve water through efficient fixtures and mindful usage</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card bg-white rounded-lg shadow-lg overflow-hidden fade-in" style="transition-delay: 0.4s;">
+                    <div class="card-image h-48">
+                        <img src="https://images.unsplash.com/photo-1526951521990-620dc14c214b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Waste Pollution" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">Waste Reduction</h3>
+                        <div class="space-y-3 text-gray-600">
+                            <p class="mb-4">The world generates 2.01 billion tons of municipal solid waste annually, with at least 33% not managed in an environmentally safe manner.</p>
+                            <div class="flex items-start">
+                                <i class="fas fa-arrow-right text-green-600 mt-1 mr-2"></i>
+                                <p>Follow the waste hierarchy: Refuse, Reduce, Reuse, Recycle, and Rot (compost)</p>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-arrow-right text-green-600 mt-1 mr-2"></i>
+                                <p>Choose products with minimal packaging and refuse single-use plastics</p>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-arrow-right text-green-600 mt-1 mr-2"></i>
+                                <p>Compost organic waste to reduce landfill methane emissions</p>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-arrow-right text-green-600 mt-1 mr-2"></i>
+                                <p>Repair items instead of replacing them to extend product lifecycles</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-gray-100 rounded-lg p-8 shadow-md fade-in">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-6">Pollution Reduction Progress</h3>
+                <div class="space-y-6">
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <span class="font-semibold text-gray-700">Ocean Plastic Reduction Initiatives</span>
+                            <span class="text-gray-600">45%</span>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-bar" style="width: 45%"></div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <span class="font-semibold text-gray-700">Renewable Energy Adoption</span>
+                            <span class="text-gray-600">38%</span>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-bar" style="width: 38%"></div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <span class="font-semibold text-gray-700">Sustainable Agricultural Practices</span>
+                            <span class="text-gray-600">29%</span>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-bar" style="width: 29%"></div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <span class="font-semibold text-gray-700">Zero-Waste Communities</span>
+                            <span class="text-gray-600">22%</span>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-bar" style="width: 22%"></div>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-gray-600 mt-6">While progress is being made in many areas, accelerated action is needed to meet environmental targets and ensure a sustainable future.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Promoting Afforestation -->
+    <section id="afforestation" class="section py-16 px-4 bg-gray-100">
+        <div class="container mx-auto">
+            <h2 class="section-title text-3xl md:text-4xl font-bold text-center mb-16 text-gray-800">Promoting Afforestation</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center mb-16">
+                <div class="slide-in-left">
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-4">Why Forests Matter</h3>
+                    <p class="text-gray-600 mb-6">Forests are the lungs of our planet, absorbing CO2 and releasing oxygen. They provide habitat for 80% of the world's terrestrial biodiversity, regulate water cycles, prevent soil erosion, and support the livelihoods of 1.6 billion people.</p>
+                    
+                    <div class="bg-white p-5 rounded-lg shadow-md mb-6">
+                        <h4 class="font-bold text-xl mb-3 text-gray-800">Benefits of Afforestation</h4>
+                        <ul class="space-y-2 text-gray-600">
+                            <li class="flex items-start">
+                                <i class="fas fa-tree text-green-600 mt-1 mr-2"></i>
+                                <span><strong>Carbon Sequestration:</strong> Trees absorb CO2, helping mitigate climate change</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-water text-green-600 mt-1 mr-2"></i>
+                                <span><strong>Water Regulation:</strong> Forests help maintain water cycles and prevent flooding</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-leaf text-green-600 mt-1 mr-2"></i>
+                                <span><strong>Biodiversity Support:</strong> Forests provide habitat for countless species</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-wind text-green-600 mt-1 mr-2"></i>
+                                <span><strong>Soil Protection:</strong> Tree roots prevent erosion and improve soil quality</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-temperature-low text-green-600 mt-1 mr-2"></i>
+                                <span><strong>Climate Regulation:</strong> Forests help moderate local and regional climates</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card overflow-hidden rounded-lg shadow-lg slide-in-right">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80" alt="Afforestation" class="w-full h-auto">
+                    </div>
+                </div>
+            </div>
+            
+            <h3 class="text-2xl font-semibold text-gray-800 mb-6 fade-in">Afforestation Action Steps</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+                <div class="bg-white p-5 rounded-lg shadow hover:shadow-xl transition-all duration-300 fade-in">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-seedling text-5xl text-green-600"></i>
+                    </div>
+                    <h4 class="font-bold text-lg mb-3 text-center text-gray-800">Plant Native Trees</h4>
+                    <p class="text-gray-600 text-center">Choose native tree species that are adapted to local conditions and support local wildlife. Join community tree planting events or start your own.</p>
+                </div>
+                
+                <div class="bg-white p-5 rounded-lg shadow hover:shadow-xl transition-all duration-300 fade-in" style="transition-delay: 0.2s;">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-hand-holding-heart text-5xl text-green-600"></i>
+                    </div>
+                    <h4 class="font-bold text-lg mb-3 text-center text-gray-800">Support Reforestation Projects</h4>
+                    <p class="text-gray-600 text-center">Donate to organizations focused on forest restoration, or offset your carbon footprint by funding tree planting through certified programs.</p>
+                </div>
+                
+                <div class="bg-white p-5 rounded-lg shadow hover:shadow-xl transition-all duration-300 fade-in" style="transition-delay: 0.4s;">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-shopping-cart text-5xl text-green-600"></i>
+                    </div>
+                    <h4 class="font-bold text-lg mb-3 text-center text-gray-800">Choose Sustainable Products</h4>
+                    <p class="text-gray-600 text-center">Look for FSC-certified wood and paper products to ensure they come from responsibly managed forests that provide environmental benefits.</p>
+                </div>
+                
+                <div class="bg-white p-5 rounded-lg shadow hover:shadow-xl transition-all duration-300 fade-in" style="transition-delay: 0.6s;">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-bullhorn text-5xl text-green-600"></i>
+                    </div>
+                    <h4 class="font-bold text-lg mb-3 text-center text-gray-800">Advocate for Forest Protection</h4>
+                    <p class="text-gray-600 text-center">Support policies that protect existing forests and promote afforestation. Raise awareness about the importance of forests in your community.</p>
+                </div>
+            </div>
+            
+            <div class="bg-white p-6 rounded-lg shadow-md fade-in">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-4">Global Afforestation Success: The Great Green Wall</h3>
+                <div class="flex flex-col md:flex-row items-center gap-6">
+                    <div class="md:w-1/3">
+                        <img src="https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Great Green Wall" class="w-full h-auto rounded-lg shadow">
+                    </div>
+                    <div class="md:w-2/3">
+                        <p class="text-gray-600 mb-4">The Great Green Wall is an African-led initiative to grow an 8,000 km natural wonder across the width of Africa. The ambitious project aims to restore degraded landscapes, sequester carbon, and create jobs in some of the world's poorest countries.</p>
+                        <p class="text-gray-600">Since its inception, millions of trees have been planted, thousands of hectares of land restored, and numerous jobs created. The project shows how large-scale afforestation can combat climate change while supporting sustainable development and local communities.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sustainable Lifestyle -->
+    <section id="lifestyle" class="section py-16 px-4 bg-white">
+        <div class="container mx-auto">
+            <h2 class="section-title text-3xl md:text-4xl font-bold text-center mb-16 text-gray-800">Sustainable Daily Practices</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+                <div class="card bg-white rounded-lg shadow-lg overflow-hidden fade-in">
+                    <div class="card-image h-48">
+                        <img src="https://images.unsplash.com/photo-1511993807578-701168605ad3?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Sustainable Food" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">Sustainable Food Choices</h3>
+                        <ul class="space-y-3 text-gray-600">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-600 mt-1 mr-2"></i>
+                                <span>Choose locally grown, seasonal, and organic foods to reduce transport emissions and chemical use</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-600 mt-1 mr-2"></i>
+                                <span>Reduce meat consumption, especially beef, which has the highest environmental footprint</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-600 mt-1 mr-2"></i>
+                                <span>Grow your own herbs, vegetables, or fruits if possible</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-600 mt-1 mr-2"></i>
+                                <span>Plan meals to reduce food waste and compost unavoidable scraps</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="card bg-white rounded-lg shadow-lg overflow-hidden fade-in" style="transition-delay: 0.2s;">
+                    <div class="card-image h-48">
+                        <img src="https://images.unsplash.com/photo-1532601224476-15c79f2f7a51?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Sustainable Home" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">Energy & Water Conservation</h3>
+                        <ul class="space-y-3 text-gray-600">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-600 mt-1 mr-2"></i>
+                                <span>Switch to energy-efficient LED bulbs and ENERGY STAR appliances</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-600 mt-1 mr-2"></i>
+                                <span>Install low-flow faucets, showerheads, and toilets to reduce water usage</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-600 mt-1 mr-2"></i>
+                                <span>Unplug electronics when not in use to prevent phantom energy drain</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-600 mt-1 mr-2"></i>
+                                <span>Consider renewable energy sources like solar panels for your home</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="card bg-white rounded-lg shadow-lg overflow-hidden fade-in" style="transition-delay: 0.4s;">
+                    <div class="card-image h-48">
+                        <img src="https://images.unsplash.com/photo-1507812984078-917a274065be?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Sustainable Shopping" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">Mindful Consumption</h3>
+                        <ul class="space-y-3 text-gray-600">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-600 mt-1 mr-2"></i>
+                                <span>Apply the "30-day rule" before making non-essential purchases</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-600 mt-1 mr-2"></i>
+                                <span>Choose durable, high-quality items that last longer and reduce waste</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-600 mt-1 mr-2"></i>
+                                <span>Support companies with strong environmental and social responsibility policies</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-600 mt-1 mr-2"></i>
+                                <span>Shop secondhand, borrow, or rent items when possible</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-gray-100 rounded-lg p-8 shadow-md fade-in">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-6">Transportation & Travel</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="font-bold text-lg mb-3 text-gray-800">Eco-Friendly Transportation Options</h4>
+                        <ul class="space-y-3 text-gray-600">
+                            <li class="flex items-start">
+                                <i class="fas fa-walking text-green-600 mt-1 mr-2"></i>
+                                <span>Walk or cycle for short distances when possible</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-bus text-green-600 mt-1 mr-2"></i>
+                                <span>Use public transportation to reduce individual carbon footprints</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-car-side text-green-600 mt-1 mr-2"></i>
+                                <span>Consider carpooling or car-sharing services for regular commutes</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-charging-station text-green-600 mt-1 mr-2"></i>
+                                <span>If buying a vehicle, choose electric or high-efficiency models</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-lg mb-3 text-gray-800">Sustainable Travel Practices</h4>
+                        <ul class="space-y-3 text-gray-600">
+                            <li class="flex items-start">
+                                <i class="fas fa-plane text-green-600 mt-1 mr-2"></i>
+                                <span>Minimize air travel or offset emissions when flying is necessary</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-train text-green-600 mt-1 mr-2"></i>
+                                <span>Choose trains over planes for medium-distance travel when possible</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-hotel text-green-600 mt-1 mr-2"></i>
+                                <span>Stay in eco-friendly accommodations that implement sustainable practices</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-map-marked-alt text-green-600 mt-1 mr-2"></i>
+                                <span>Support local businesses and respect local environments when traveling</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Take Action Section -->
+    <section id="action" class="section py-16 px-4 bg-gray-100">
+        <div class="container mx-auto">
+            <h2 class="section-title text-3xl md:text-4xl font-bold text-center mb-16 text-gray-800">Take Action Today</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center mb-16">
+                <div class="slide-in-left">
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-4">Individual Impact Matters</h3>
+                    <p class="text-gray-600 mb-6">Every action you take for environmental sustainability contributes to collective impact. Your choices influence others and send market signals that drive wider change.</p>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+                        <h4 class="font-bold text-xl mb-4 text-gray-800">Start With These Simple Steps:</h4>
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <div class="bg-green-100 rounded-full p-2 mr-4">
+                                    <i class="fas fa-lightbulb text-xl text-green-600"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-semibold text-gray-800">Begin with one change</h5>
+                                    <p class="text-gray-600">Choose one sustainable practice to adopt this week, then gradually add more</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="bg-green-100 rounded-full p-2 mr-4">
+                                    <i class="fas fa-users text-xl text-green-600"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-semibold text-gray-800">Share your journey</h5>
+                                    <p class="text-gray-600">Inspire others by sharing your environmental efforts on social media</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="bg-green-100 rounded-full p-2 mr-4">
+                                    <i class="fas fa-hands-helping text-xl text-green-600"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-semibold text-gray-800">Join local initiatives</h5>
+                                    <p class="text-gray-600">Connect with community groups focused on environmental action</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="bg-green-100 rounded-full p-2 mr-4">
+                                    <i class="fas fa-vote-yea text-xl text-green-600"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-semibold text-gray-800">Advocate for change</h5>
+                                    <p class="text-gray-600">Support environmental policies and vote for eco-conscious leaders</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card overflow-hidden rounded-lg shadow-lg slide-in-right">
+                    <div class="card-image">
+                        <img src="https://www.brushwithbamboo.com/wp-content/uploads/2021/11/care-for-the-environment.jpg" alt="Taking Action" class="w-full h-auto">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-lg p-8 shadow-md mb-10 fade-in">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-6 text-center">Make a Commitment</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="p-6 border-2 border-green-200 rounded-lg hover:border-green-500 transition-all duration-300 text-center">
+                        <h4 class="font-bold text-xl mb-3 text-gray-800">Today</h4>
+                        <p class="text-gray-600 mb-4">Choose one sustainable habit to start immediately, such as refusing single-use plastics or taking shorter showers.</p>
+                        <div class="text-green-600">
+                            <i class="fas fa-calendar-day text-3xl"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="p-6 border-2 border-green-200 rounded-lg hover:border-green-500 transition-all duration-300 text-center">
+                        <h4 class="font-bold text-xl mb-3 text-gray-800">This Month</h4>
+                        <p class="text-gray-600 mb-4">Commit to a larger project like starting a compost bin, installing water-saving fixtures, or joining a cleanup event.</p>
+                        <div class="text-green-600">
+                            <i class="fas fa-calendar-week text-3xl"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="p-6 border-2 border-green-200 rounded-lg hover:border-green-500 transition-all duration-300 text-center">
+                        <h4 class="font-bold text-xl mb-3 text-gray-800">This Year</h4>
+                        <p class="text-gray-600 mb-4">Plan for significant sustainable changes like transitioning to renewable energy, planting trees, or adopting a low-waste lifestyle.</p>
+                        <div class="text-green-600">
+                            <i class="fas fa-calendar text-3xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center fade-in">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-6">Join the Global Movement</h3>
+                <p class="text-gray-600 mb-8 max-w-3xl mx-auto">Environmental sustainability requires collective action. Connect with like-minded individuals and organizations working toward a healthier planet.</p>
+                <a href="#" class="action-btn px-8 py-4 rounded-full text-white font-semibold inline-block">Find Environmental Organizations</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+   
+
+    <script>
+        // Animation on scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const animatedElements = document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right, .zoom-in, .fact-card, .stat');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('appear');
+                        entry.target.classList.add('in-view');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            animatedElements.forEach(element => {
+                observer.observe(element);
+            });
+            
+            // Progress bars animation
+            const progressBars = document.querySelectorAll('.progress-bar');
+            const progressObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const width = entry.target.parentElement.querySelector('span').textContent;
+                        entry.target.style.width = width;
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            progressBars.forEach(bar => {
+                progressObserver.observe(bar);
+            });
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
